@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Code Always-On - Secure AI Assistant</title>
+
+  <!-- Google Fonts - Autonomee Style -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+  <!-- Reveal.js -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/monokai.css">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+/*
+ * Autonomee.ai Presentation Theme
+ * Editorial, minimal, serif headlines
+ */
+
+/* ===== CSS VARIABLES - AUTONOMEE PALETTE ===== */
+:root {
+  --bg-dark: #0a0a0a;
+  --bg-card: #111111;
+  --bg-card-hover: #1a1a1a;
+  --accent: #7b8fa8;
+  --accent-light: #9bb0c9;
+  --accent-glow: rgba(123, 143, 168, 0.15);
+  --success: #7b9a7b;
+  --warning: #c9a85b;
+  --error: #c97b7b;
+  --text-primary: #f5f4f0;
+  --text-secondary: #a8a8a8;
+  --text-muted: #666666;
+  --border: #2a2a2a;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 40px;
+  --spacing-xl: 60px;
+}
+
+html, body {
+  background: var(--bg-dark) !important;
+  color: var(--text-primary);
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+.reveal-viewport {
+  background: var(--bg-dark) !important;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px) !important;
+  background-size: 60px 60px !important;
+}
+
+.reveal {
+  background: var(--bg-dark);
+  font-family: var(--font-sans);
+  font-size: 22px;
+  color: var(--text-primary);
+}
+
+.reveal .slides { text-align: left; }
+.reveal .slides section { padding: 0; background: var(--bg-dark); }
+
+.slide {
+  height: 100%;
+  width: 100%;
+  padding: var(--spacing-xl);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  position: relative;
+}
+
+.slide > * { position: relative; z-index: 1; }
+.slide--center { align-items: center; justify-content: center; text-align: center; }
+.slide--section { background: transparent; }
+
+.slide--section::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.header__logo {
+  font-family: var(--font-serif);
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: 0.02em;
+}
+
+.header__logo svg { width: 18px; height: 18px; color: var(--accent); }
+
+.kicker {
+  font-size: 0.7rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  margin-bottom: var(--spacing-sm);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.kicker::after {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--accent);
+  opacity: 0.5;
+}
+
+h1, .h1 {
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.1;
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--text-primary);
+}
+
+h2, .h2 {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  font-weight: 400;
+  line-height: 1.15;
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+h3, .h3 {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.3;
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+h4, .h4 {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0 0 var(--spacing-xs) 0;
+  letter-spacing: 0.02em;
+}
+
+.lead {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 600px;
+}
+
+.muted { color: var(--text-muted); }
+.highlight, .accent-text { color: var(--accent); }
+
+code, .code {
+  font-family: var(--font-mono);
+  background: rgba(123, 143, 168, 0.1);
+  padding: 2px 8px;
+  font-size: 0.85em;
+  color: var(--accent-light);
+  border: 1px solid var(--border);
+}
+
+pre {
+  background: #0d0d0d;
+  border: 1px solid var(--border);
+  padding: var(--spacing-md);
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.75em;
+  line-height: 1.6;
+}
+
+pre code { background: none; padding: 0; border: none; color: var(--text-secondary); }
+
+.content { flex: 1; display: flex; flex-direction: column; }
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+  align-items: center;
+  flex: 1;
+}
+
+.split--60-40 { grid-template-columns: 1.5fr 1fr; }
+.split--40-60 { grid-template-columns: 1fr 1.5fr; }
+
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--spacing-md); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--spacing-md); }
+
+.flex-center { display: flex; align-items: center; justify-content: center; }
+
+.card {
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: var(--spacing-md);
+  transition: all 0.3s ease;
+}
+
+.card:hover { background: var(--bg-card); border-color: var(--accent); }
+.card--featured { border-color: var(--accent); }
+.card--danger { border-color: var(--error); }
+.card--success { border-color: var(--success); }
+
+.card__icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: var(--spacing-sm);
+  color: var(--accent);
+}
+
+.card__icon svg { width: 100%; height: 100%; stroke-width: 1.5; }
+.card__icon--danger { color: var(--error); }
+.card__icon--success { color: var(--success); }
+
+.card__title {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: var(--spacing-xs);
+}
+
+.card__text { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; }
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.metric {
+  text-align: center;
+  padding: var(--spacing-md);
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+}
+
+.metric:hover { border-color: var(--accent); }
+.metric--danger { border-color: var(--error); }
+.metric--danger .metric__value { color: var(--error); }
+
+.metric__value {
+  font-family: var(--font-serif);
+  font-size: 2.5rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: var(--spacing-xs);
+}
+
+.metric__label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.list { list-style: none; padding: 0; margin: 0; }
+
+.list li {
+  padding: var(--spacing-sm) 0;
+  padding-left: var(--spacing-lg);
+  position: relative;
+  border-bottom: 1px solid var(--border);
+}
+
+.list li:last-child { border-bottom: none; }
+
+.list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  top: var(--spacing-sm);
+  color: var(--accent);
+  font-weight: 400;
+}
+
+.list--check li::before { content: '✓'; color: var(--success); }
+.list--x li::before { content: '✗'; color: var(--error); }
+
+.list--numbered { counter-reset: list-counter; }
+.list--numbered li { counter-increment: list-counter; }
+
+.list--numbered li::before {
+  content: counter(list-counter, decimal-leading-zero);
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.badge--success { color: var(--success); border-color: var(--success); }
+.badge--warning { color: var(--warning); border-color: var(--warning); }
+.badge--danger { color: var(--error); border-color: var(--error); }
+
+.timeline {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: var(--spacing-lg) 0;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border);
+}
+
+.timeline__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  flex: 1;
+}
+
+.timeline__year {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-style: italic;
+  color: var(--accent);
+  margin-bottom: var(--spacing-sm);
+}
+
+.timeline__dot {
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-bottom: var(--spacing-sm);
+  position: relative;
+  z-index: 1;
+}
+
+.timeline__content { font-size: 0.85rem; color: var(--text-secondary); max-width: 150px; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 28px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid var(--text-primary);
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.btn:hover { background: var(--text-primary); color: var(--bg-dark); }
+.btn--accent { border-color: var(--accent); color: var(--accent); }
+.btn--accent:hover { background: var(--accent); color: var(--bg-dark); }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
+}
+
+.contact-item { text-align: center; }
+
+.contact-item__label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--spacing-xs);
+}
+
+.contact-item__value { font-size: 0.95rem; color: var(--text-secondary); }
+
+.reveal .controls { color: var(--accent); }
+.reveal .progress { background: var(--border); height: 2px; }
+.reveal .progress span { background: var(--accent); }
+
+.reveal .slide-number {
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-family: var(--font-mono);
+  right: 20px;
+  bottom: 20px;
+}
+
+.reveal .slides section .fragment { opacity: 0; transition: all 0.4s ease; }
+.reveal .slides section .fragment.visible { opacity: 1; }
+.reveal .slides section .fragment.fade-up { transform: translateY(20px); }
+.reveal .slides section .fragment.fade-up.visible { transform: translateY(0); }
+
+/* Custom styles for this presentation */
+.quote-block {
+  border-left: 3px solid var(--error);
+  padding-left: var(--spacing-md);
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.quote-author {
+  margin-top: var(--spacing-sm);
+  font-style: normal;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--spacing-md);
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: var(--spacing-sm);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+.comparison-table th {
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.7rem;
+}
+
+.comparison-table td:first-child { color: var(--text-secondary); }
+
+.check { color: var(--success); }
+.cross { color: var(--error); }
+
+.workflow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+.workflow__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.workflow__box {
+  border: 1px solid var(--border);
+  padding: var(--spacing-sm) var(--spacing-md);
+  text-align: center;
+  min-width: 120px;
+}
+
+.workflow__label {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent-light);
+}
+
+.workflow__sublabel {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.workflow__arrow {
+  color: var(--accent);
+  font-size: 1.5rem;
+}
+
+/* ===== RESPONSIVE - ADJUST TO SCREEN ===== */
+@media (max-width: 1400px) {
+  h1 { font-size: 3rem; }
+  h2 { font-size: 2.2rem; }
+  .slide { padding: var(--spacing-lg); }
+}
+
+@media (max-width: 1024px) {
+  h1 { font-size: 2.5rem; }
+  h2 { font-size: 1.8rem; }
+  .lead { font-size: 1rem; }
+
+  .split {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .grid-4, .grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .workflow {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .workflow__arrow {
+    font-size: 1.2rem;
+  }
+
+  .metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .comparison-table { font-size: 0.85rem; }
+}
+
+@media (max-width: 768px) {
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.5rem; }
+  .slide { padding: var(--spacing-md); }
+  .lead { font-size: 0.95rem; }
+
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .metric__value { font-size: 2rem; }
+}
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- SLIDE 1: Title -->
+      <section>
+        <div class="slide slide--section slide--center">
+          <div class="content flex-center" style="flex-direction: column; text-align: center;">
+            <p class="kicker" style="justify-content: center;">From Security Nightmare to Solution</p>
+            <h1>Claude Code<br><span class="accent-text">Always-On</span></h1>
+            <p class="lead" style="max-width: 700px; margin: 0 auto;">
+              After the Clawdbot fiasco exposed 42,000+ instances, I built a secure 24/7 AI assistant using Claude Code. Same features. Zero vulnerabilities.
+            </p>
+            <div style="margin-top: 40px;">
+              <span class="badge">Case Study + Tutorial</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 2: The Promise -->
+      <section>
+        <div class="slide">
+          <div class="header">
+            <div class="header__logo">
+              <i data-lucide="sparkles"></i>
+              The Promise
+            </div>
+          </div>
+          <div class="split">
+            <div>
+              <p class="kicker">01 // What They Promised</p>
+              <h2>"Claude with Hands"</h2>
+              <p class="lead">Clawdbot became one of GitHub's fastest-growing projects ever. 136,000+ stars in weeks.</p>
+            </div>
+            <div>
+              <ul class="list">
+                <li class="fragment"><strong>24/7 AI Employee</strong><br><span class="muted">Always-on assistant that works while you sleep</span></li>
+                <li class="fragment"><strong>Full System Access</strong><br><span class="muted">Shell, files, browser, everything</span></li>
+                <li class="fragment"><strong>50+ Integrations</strong><br><span class="muted">WhatsApp, Telegram, Slack, Gmail, Calendar</span></li>
+                <li class="fragment"><strong>Proactive Behavior</strong><br><span class="muted">Messages you first when needed</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: The Reality -->
+      <section>
+        <div class="slide">
+          <div class="header">
+            <div class="header__logo">
+              <i data-lucide="alert-triangle"></i>
+              The Reality
+            </div>
+          </div>
+          <div class="content">
+            <p class="kicker">02 // Then Everything Went Wrong</p>
+            <h2>A Perfect Storm</h2>
+            <div class="grid-2" style="margin-top: 32px;">
+              <div class="card card--danger fragment fade-up">
+                <div class="card__icon card__icon--danger"><i data-lucide="scale"></i></div>
+                <h4 class="card__title">Trademark Dispute</h4>
+                <p class="card__text">Anthropic forced a rebrand. "Clawd" too similar to "Claude".</p>
+              </div>
+              <div class="card card--danger fragment fade-up">
+                <div class="card__icon card__icon--danger"><i data-lucide="zap"></i></div>
+                <h4 class="card__title">10-Second Hijack</h4>
+                <p class="card__text">Crypto scammers snatched accounts in ~10 seconds during rebrand.</p>
+              </div>
+              <div class="card card--danger fragment fade-up">
+                <div class="card__icon card__icon--danger"><i data-lucide="coins"></i></div>
+                <h4 class="card__title">$16M Fake Token</h4>
+                <p class="card__text">Fake $CLAWD token hit $16M market cap, then crashed 90%.</p>
+              </div>
+              <div class="card card--danger fragment fade-up">
+                <div class="card__icon card__icon--danger"><i data-lucide="bot"></i></div>
+                <h4 class="card__title">AI Manifesto</h4>
+                <p class="card__text">Moltbook AI network posted "human extinction manifesto" with 65K upvotes.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: The Numbers -->
+      <section>
+        <div class="slide">
+          <div class="header">
+            <div class="header__logo">
+              <i data-lucide="shield-off"></i>
+              Security Nightmare
+            </div>
+          </div>
+          <div class="content">
+            <p class="kicker">03 // The Numbers</p>
+            <h2>Critical Vulnerabilities</h2>
+            <div class="metrics" style="margin-top: 48px;">
+              <div class="metric metric--danger fragment">
+                <div class="metric__value">42,665</div>
+                <div class="metric__label">Exposed Instances</div>
+              </div>
+              <div class="metric metric--danger fragment">
+                <div class="metric__value">9.6</div>
+                <div class="metric__label">CVSS Severity</div>
+              </div>
+              <div class="metric metric--danger fragment">
+                <div class="metric__value">93.4%</div>
+                <div class="metric__label">Auth Bypass Rate</div>
+              </div>
+              <div class="metric metric--danger fragment">
+                <div class="metric__value">5 min</div>
+                <div class="metric__label">To Extract Keys</div>
+              </div>
+            </div>
+            <div style="margin-top: 40px;" class="fragment">
+              <p class="muted" style="font-size: 0.9rem;">CVE-2025-6514: Command injection. CVE-2025-49596: Unauthenticated access. CVE-2025-52882: Arbitrary file access.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: Expert Warnings -->
+      <section>
+        <div class="slide">
+          <div class="header">
+            <div class="header__logo">
+              <i data-lucide="message-circle-warning"></i>
+              Expert Warnings
+            </div>
+          </div>
+          <div class="split">
+            <div>
+              <p class="kicker">04 // What Experts Said</p>
+              <h2>"Don't Run<br>Clawdbot"</h2>
+              <p class="lead">Security researchers were unequivocal in their warnings.</p>
+            </div>
+            <div>
+              <div class="quote-block fragment" style="margin-bottom: 24px;">
+                "Infostealer malware disguised as an AI personal assistant."
+                <div class="quote-author">Heather Adkins, VP Security Engineering, Google Cloud</div>
+              </div>
+              <div class="quote-block fragment" style="margin-bottom: 24px;">
+                "My current favorite for the most likely Challenger disaster in coding agent security."
+                <div class="quote-author">Simon Willison, AI Researcher</div>
+              </div>
+              <div class="quote-block fragment">
+                "22% of enterprise customers have employees actively using Clawdbot. Shadow AI risk is real."
+                <div class="quote-author">Token Security Research</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: The Core Vulnerabilities -->
+      <section>
+        <div class="slide">
+          <div class="header">
+            <div class="header__logo">
+              <i data-lucide="bug"></i>
+              Core Issues
+            </div>
+          </div>
+          <div class="split">
+            <div>
+              <p class="kicker">05 // The Architecture Flaws</p>
+              <h2>Why It Was<br>Broken</h2>
+              <p class="lead">Fundamental security issues baked into the design.</p>
+            </div>
+            <div>
+              <ul class="list list--numbered">
+                <li class="fragment">
+                  <strong>Localhost Trust Flaw</strong><br>
+                  <span class="muted">Proxied connections appear local, bypassing auth</span>
+                </li>
+                <li class="fragment">
+                  <strong>Plaintext Credentials</strong><br>
+                  <span class="muted">API keys stored in ~/.clawdbot/*.json</span>
+                </li>
+                <li class="fragment">
+                  <strong>No Input Validation</strong><br>
+                  <span class="muted">Prompt injection via email in 5 minutes</span>
+                </li>
+                <li class="fragment">
+                  <strong>Supply Chain Risk</strong><br>
+                  <span class="muted">26% of 31,000 skills had vulnerabilities</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: The Decision -->
+      <section>
+        <div class="slide slide--section slide--center">
+          <p class="kicker" style="justify-content: center;">06 // The Decision</p>
+          <h2>Build or Wait?</h2>
+          <p class="lead muted" style="max-width: 700px;">Same features are possible with Claude Code + MCP. But secure, sandboxed, and permission-gated. No public ports, no plaintext keys. You own the infrastructure.</p>
+          <div style="margin-top: 40px;">
+            <span class="badge badge--success">Let's Build</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: Architecture -->
+      <section>
+        <div class="slide">
+          <div class="header">
+            <div class="header__logo">
+              <i data-lucide="git-branch"></i>
+              Architecture
+            </div>
+          </div>
+          <div class="content">
+            <p class="kicker">07 // How It Works</p>
+            <h2>PAI Always-On Architecture</h2>
+            <div class="workflow" style="margin-top: 48px;">
+              <div class="workflow__step fragment">
+                <div class="workflow__box">
+                  <div class="workflow__label">Telegram</div>
+                  <div class="workflow__sublabel">Message In</div>
+                </div>
+              </div>
+              <div class="workflow__arrow">→</div>
+              <div class="workflow__step fragment">
+                <div class="workflow__box">
+                  <div class="workflow__label">Bun Relay</div>
+                  <div class="workflow__sublabel">grammy</div>
+                </div>
+              </div>
+              <div class="workflow__arrow">→</div>
+              <div class="workflow__step fragment">
+                <div class="workflow__box">
+                  <div class="workflow__label">Claude Code</div>
+                  <div class="workflow__sublabel">headless -p</div>
+                </div>
+              </div>
+              <div class="workflow__arrow">→</div>
+              <div class="workflow__step fragment">
+                <div class="workflow__box">
+                  <div class="workflow__label">PAI Skills</div>
+                  <div class="workflow__sublabel">MCP Tools</div>
+                </div>
+              </div>
+              <div class="workflow__arrow">→</div>
+              <div class="workflow__step fragment">
+                <div class="workflow__box">
+                  <div class="workflow__label">Response</div>
+                  <div class="workflow__sublabel">Text/Voice</div>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top: 40px; text-align: center;" class="fragment">
+              <code style="font-size: 0.8rem;">claude -p "[prompt]" --output-format json --allowedTools "..."</code>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9: Phone Call Flow -->
+      <section>
+        <div class="slide">
+          <div class="header">
+            <div class="header__logo">
+              <i data-lucide="phone-call"></i>
+              Voice Calls
+            </div>
+          </div>
+          <div class="content">
+            <p class="kicker">08 // Phone Call Flow</p>
+            <h2>Voice Calls That Work</h2>
+            <div class="workflow" style="margin-top: 48px;">
+              <div class="workflow__step fragment">
+                <div class="workflow__box">
+                  <div class="workflow__label">"Call me"</div>
+                  <div class="workflow__sublabel">Telegram</div>
+                </div>
+              </div>
+              <div class="workflow__arrow">→</div>
+              <div class="workflow__step fragment">
+                <div class="workflow__box">
+                  <div class="workflow__label">ElevenLabs</div>
+                  <div class="workflow__sublabel">Conv. AI</div>
+                </div>
+              </div>
+              <div class="workflow__arrow">→</div>
+              <div class="workflow__step fragment">
+                <div class="workflow__box">
+                  <div class="workflow__label">Twilio</div>
+                  <div class="workflow__sublabel">Phone rings</div>
+                </div>
+              </div>
+            </div>
+            <div class="workflow" style="margin-top: 24px;">
+              <div class="workflow__step fragment">
+                <div class="workflow__box">
+                  <div class="workflow__label">Call Ends</div>
+                  <div class="workflow__sublabel">Transcript</div>
+                </div>
+              </div>
+              <div class="workflow__arrow">→</div>
+              <div class="workflow__step fragment">
+                <div class="workflow__box">
+                  <div class="workflow__label">Claude</div>
+                  <div class="workflow__sublabel">Processes</div>
+                </div>
+              </div>
+              <div class="workflow__arrow">→</div>
+              <div class="workflow__step fragment">
+                <div class="workflow__box">
+                  <div class="workflow__label">Actions</div>
+                  <div class="workflow__sublabel">Executed</div>
+                </div>
+              </div>
+              <div class="workflow__arrow">→</div>
+              <div class="workflow__step fragment">
+                <div class="workflow__box">
+                  <div class="workflow__label">Summary</div>
+                  <div class="workflow__sublabel">Telegram</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 10: Features Built -->
+      <section>
+        <div class="slide">
+          <div class="header">
+            <div class="header__logo">
+              <i data-lucide="check-circle"></i>
+              Features
+            </div>
+          </div>
+          <div class="content">
+            <p class="kicker">09 // What I Built</p>
+            <h2>Full Feature Set</h2>
+            <div class="grid-2" style="margin-top: 32px;">
+              <div class="card card--success fragment fade-up">
+                <div class="card__icon card__icon--success"><i data-lucide="message-square"></i></div>
+                <h4 class="card__title">Multi-Modal Input</h4>
+                <p class="card__text">Text, voice messages, images, files. All processed.</p>
+              </div>
+              <div class="card card--success fragment fade-up">
+                <div class="card__icon card__icon--success"><i data-lucide="volume-2"></i></div>
+                <h4 class="card__title">Voice Replies</h4>
+                <p class="card__text">ElevenLabs TTS. Send voice, get voice back.</p>
+              </div>
+              <div class="card card--success fragment fade-up">
+                <div class="card__icon card__icon--success"><i data-lucide="phone"></i></div>
+                <h4 class="card__title">Phone Calls</h4>
+                <p class="card__text">ElevenLabs + Twilio. Post-call transcript processing.</p>
+              </div>
+              <div class="card card--success fragment fade-up">
+                <div class="card__icon card__icon--success"><i data-lucide="bell"></i></div>
+                <h4 class="card__title">Proactive Check-ins</h4>
+                <p class="card__text">AI decides when to reach out. Every 30 min via launchd.</p>
+              </div>
+              <div class="card card--success fragment fade-up">
+                <div class="card__icon card__icon--success"><i data-lucide="target"></i></div>
+                <h4 class="card__title">Goal Tracking</h4>
+                <p class="card__text">Natural language detection. "Finish video by 5pm" auto-tracked.</p>
+              </div>
+              <div class="card card--success fragment fade-up">
+                <div class="card__icon card__icon--success"><i data-lucide="brain"></i></div>
+                <h4 class="card__title">Semantic Memory</h4>
+                <p class="card__text">4,000+ messages with OpenAI embeddings. AI summaries.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 11: Semantic Memory -->
+      <section>
+        <div class="slide">
+          <div class="header">
+            <div class="header__logo">
+              <i data-lucide="database"></i>
+              Memory System
+            </div>
+          </div>
+          <div class="split">
+            <div>
+              <p class="kicker">10 // Semantic Memory</p>
+              <h2>"What do you<br>remember about<br>June?"</h2>
+              <p class="lead">Not raw message dumps. AI-generated summaries with context.</p>
+            </div>
+            <div>
+              <div class="card fragment" style="margin-bottom: 16px;">
+                <h4 class="card__title">Supabase + pgvector</h4>
+                <p class="card__text">4,000+ messages stored with OpenAI embeddings (1536 dims)</p>
+              </div>
+              <div class="card fragment" style="margin-bottom: 16px;">
+                <h4 class="card__title">Hybrid Search</h4>
+                <p class="card__text">Keyword + semantic similarity. Best of both worlds.</p>
+              </div>
+              <div class="card fragment" style="margin-bottom: 16px;">
+                <h4 class="card__title">Time-Aware</h4>
+                <p class="card__text">Knows what's recent vs outdated. Context matters.</p>
+              </div>
+              <div class="card fragment">
+                <h4 class="card__title">Edge Functions</h4>
+                <p class="card__text">OpenAI key stays in Supabase secrets. Never exposed.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 12: Security Model -->
+      <section>
+        <div class="slide">
+          <div class="header">
+            <div class="header__logo">
+              <i data-lucide="shield-check"></i>
+              Security
+            </div>
+          </div>
+          <div class="content">
+            <p class="kicker">11 // Security Model</p>
+            <h2>How We Made It Safe</h2>
+            <table class="comparison-table" style="margin-top: 32px;">
+              <thead>
+                <tr>
+                  <th>Vulnerability</th>
+                  <th>Clawdbot</th>
+                  <th>PAI Always-On</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="fragment">
+                  <td>Network Exposure</td>
+                  <td><span class="cross">Public WebSocket :18789</span></td>
+                  <td><span class="check">Local only, no ports</span></td>
+                </tr>
+                <tr class="fragment">
+                  <td>Credential Storage</td>
+                  <td><span class="cross">Plaintext JSON files</span></td>
+                  <td><span class="check">MCP OAuth, env vars</span></td>
+                </tr>
+                <tr class="fragment">
+                  <td>Authentication</td>
+                  <td><span class="cross">None by default</span></td>
+                  <td><span class="check">User ID restriction</span></td>
+                </tr>
+                <tr class="fragment">
+                  <td>Execution Model</td>
+                  <td><span class="cross">Auto-execute all</span></td>
+                  <td><span class="check">Permission-gated</span></td>
+                </tr>
+                <tr class="fragment">
+                  <td>Sandboxing</td>
+                  <td><span class="cross">None</span></td>
+                  <td><span class="check">Claude Code sandbox</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 13: Feature Comparison -->
+      <section>
+        <div class="slide">
+          <div class="header">
+            <div class="header__logo">
+              <i data-lucide="git-compare"></i>
+              Comparison
+            </div>
+          </div>
+          <div class="content">
+            <p class="kicker">12 // Feature Comparison</p>
+            <h2>Clawdbot vs PAI Always-On</h2>
+            <table class="comparison-table" style="margin-top: 32px;">
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>Clawdbot</th>
+                  <th>PAI</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="fragment">
+                  <td>24/7 Operation</td>
+                  <td><span class="check">✓</span></td>
+                  <td><span class="check">✓</span></td>
+                </tr>
+                <tr class="fragment">
+                  <td>Voice Messages</td>
+                  <td><span class="check">✓</span></td>
+                  <td><span class="check">✓</span></td>
+                </tr>
+                <tr class="fragment">
+                  <td>Phone Calls</td>
+                  <td><span class="cross">✗</span></td>
+                  <td><span class="check">✓</span></td>
+                </tr>
+                <tr class="fragment">
+                  <td>Semantic Memory</td>
+                  <td><span class="cross">✗</span></td>
+                  <td><span class="check">✓</span></td>
+                </tr>
+                <tr class="fragment">
+                  <td>Security</td>
+                  <td><span class="cross">42K exposed</span></td>
+                  <td><span class="check">Private</span></td>
+                </tr>
+                <tr class="fragment">
+                  <td>Your Infrastructure</td>
+                  <td><span class="cross">✗</span></td>
+                  <td><span class="check">✓</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 14: Cost Comparison -->
+      <section>
+        <div class="slide">
+          <div class="header">
+            <div class="header__logo">
+              <i data-lucide="dollar-sign"></i>
+              Costs
+            </div>
+          </div>
+          <div class="split">
+            <div>
+              <p class="kicker">13 // Cost Comparison</p>
+              <h2>$500-5K/mo vs<br>$200/mo Fixed</h2>
+              <p class="lead">Predictable fixed cost. No mysterious token burn.</p>
+            </div>
+            <div>
+              <div class="card card--danger fragment" style="margin-bottom: 16px;">
+                <h4 class="card__title">Clawdbot Costs</h4>
+                <ul class="list" style="margin-top: 12px;">
+                  <li>Idle: $150/month heartbeat</li>
+                  <li>Active: $500-5,000/month</li>
+                  <li>8M tokens "just monitoring"</li>
+                  <li>180M tokens/week for heavy user</li>
+                </ul>
+              </div>
+              <div class="card card--success fragment">
+                <h4 class="card__title">Claude Code Always-On</h4>
+                <ul class="list" style="margin-top: 12px;">
+                  <li>Claude Max 20x: $200/month (fixed)</li>
+                  <li>Supabase: Free tier</li>
+                  <li>ElevenLabs: ~$5-20/month</li>
+                  <li>Predictable. No surprises.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 15: Autonomy Philosophy -->
+      <section>
+        <div class="slide">
+          <div class="header">
+            <div class="header__logo">
+              <i data-lucide="compass"></i>
+              Philosophy
+            </div>
+          </div>
+          <div class="split">
+            <div>
+              <p class="kicker">14 // Why This Matters</p>
+              <h2>The Autonomy<br>Philosophy</h2>
+              <p class="lead">Build systems that create freedom, not dependency.</p>
+            </div>
+            <div>
+              <ul class="list list--check">
+                <li class="fragment">
+                  <strong>You own your infrastructure</strong><br>
+                  <span class="muted">Not renting someone else's security nightmare</span>
+                </li>
+                <li class="fragment">
+                  <strong>You control your data</strong><br>
+                  <span class="muted">Local files, your Supabase, your keys</span>
+                </li>
+                <li class="fragment">
+                  <strong>No public exposure</strong><br>
+                  <span class="muted">No WebSocket ports, no attack surface</span>
+                </li>
+                <li class="fragment">
+                  <strong>Modular & extensible</strong><br>
+                  <span class="muted">Swap components without lock-in</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 16: Tech Stack -->
+      <section>
+        <div class="slide">
+          <div class="header">
+            <div class="header__logo">
+              <i data-lucide="layers"></i>
+              Tech Stack
+            </div>
+          </div>
+          <div class="content">
+            <p class="kicker">15 // Full Tech Stack</p>
+            <h2>What Powers It</h2>
+            <div class="grid-3" style="margin-top: 32px;">
+              <div class="card fragment fade-up">
+                <h4 class="card__title">Runtime</h4>
+                <p class="card__text"><code>Bun</code> - Fast TypeScript runtime</p>
+              </div>
+              <div class="card fragment fade-up">
+                <h4 class="card__title">Bot Framework</h4>
+                <p class="card__text"><code>grammy</code> - Telegram Bot API</p>
+              </div>
+              <div class="card fragment fade-up">
+                <h4 class="card__title">AI Engine</h4>
+                <p class="card__text"><code>Claude Code</code> - Headless mode with MCP</p>
+              </div>
+              <div class="card fragment fade-up">
+                <h4 class="card__title">Voice Transcription</h4>
+                <p class="card__text"><code>Gemini API</code> - Multilingual audio</p>
+              </div>
+              <div class="card fragment fade-up">
+                <h4 class="card__title">Voice Synthesis</h4>
+                <p class="card__text"><code>ElevenLabs</code> - TTS + Conversational AI</p>
+              </div>
+              <div class="card fragment fade-up">
+                <h4 class="card__title">Phone Calls</h4>
+                <p class="card__text"><code>Twilio</code> - Outbound calls via ElevenLabs</p>
+              </div>
+              <div class="card fragment fade-up">
+                <h4 class="card__title">Database</h4>
+                <p class="card__text"><code>Supabase</code> - PostgreSQL + pgvector</p>
+              </div>
+              <div class="card fragment fade-up">
+                <h4 class="card__title">Embeddings</h4>
+                <p class="card__text"><code>OpenAI</code> - text-embedding-3-large</p>
+              </div>
+              <div class="card fragment fade-up">
+                <h4 class="card__title">Daemon</h4>
+                <p class="card__text"><code>launchd</code> - macOS 24/7 service</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 17: CTA -->
+      <section>
+        <div class="slide slide--section slide--center">
+          <div class="content flex-center" style="flex-direction: column;">
+            <h1>Build Your Own<br><span class="accent-text">Claude Code Always-On</span></h1>
+            <p class="lead" style="margin-bottom: 40px;">Full documentation and source code available.</p>
+            <div class="contact-grid" style="width: 100%; max-width: 700px;">
+              <div class="contact-item">
+                <div class="contact-item__label">YouTube</div>
+                <a href="https://youtube.com/@godago" target="_blank" class="contact-item__value" style="color: var(--accent); text-decoration: none;">@godago</a>
+              </div>
+              <div class="contact-item">
+                <div class="contact-item__label">Community</div>
+                <a href="https://skool.com/ai-productivity-hub" target="_blank" class="contact-item__value" style="color: var(--accent); text-decoration: none;">AI Productivity Hub</a>
+              </div>
+              <div class="contact-item">
+                <div class="contact-item__label">Website</div>
+                <a href="https://autonomee.ai" target="_blank" class="contact-item__value" style="color: var(--accent); text-decoration: none;">autonomee.ai</a>
+              </div>
+            </div>
+            <div style="margin-top: 40px; display: flex; gap: 16px;">
+              <a href="https://youtube.com/@godago" target="_blank" class="btn btn--accent">Watch Tutorial</a>
+              <a href="https://skool.com/ai-productivity-hub" target="_blank" class="btn">Join Community</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Reveal.js Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.5.0/plugin/highlight/highlight.js"></script>
+
+  <script>
+    Reveal.initialize({
+      hash: true,
+      slideNumber: true,
+      controls: true,
+      controlsLayout: 'bottom-right',
+      controlsBackArrows: 'faded',
+      progress: true,
+      center: false,
+      transition: 'slide',
+      backgroundTransition: 'fade',
+      width: '100%',
+      height: '100%',
+      margin: 0.04,
+      minScale: 0.2,
+      maxScale: 2,
+      autoAnimate: true,
+      autoAnimateDuration: 0.7,
+      plugins: [RevealHighlight]
+    });
+
+    // Initialize Lucide icons
+    lucide.createIcons();
+  </script>
+</body>
+</html>
