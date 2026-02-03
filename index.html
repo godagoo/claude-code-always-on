@@ -420,6 +420,13 @@ pre code { background: none; padding: 0; border: none; color: var(--text-seconda
 .btn--accent { border-color: var(--accent); color: var(--accent); }
 .btn--accent:hover { background: var(--accent); color: var(--bg-dark); }
 
+/* Ensure links are clickable in Reveal.js */
+.reveal a.btn, .reveal .contact-item a {
+  pointer-events: auto !important;
+  position: relative;
+  z-index: 100;
+}
+
 .contact-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
