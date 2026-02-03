@@ -1280,10 +1280,7 @@ pre code { background: none; padding: 0; border: none; color: var(--text-seconda
                 <a href="https://autonomee.ai" target="_blank" rel="noopener" class="contact-item__value" style="color: var(--accent); text-decoration: none;" data-prevent-swipe>autonomee.ai</a>
               </div>
             </div>
-            <div style="margin-top: 40px; display: flex; gap: 16px;">
-              <div class="btn btn--accent" id="btn-youtube">Watch Tutorial</div>
-              <div class="btn" id="btn-skool">Join Community</div>
-            </div>
+            <!-- Buttons rendered outside Reveal.js - see bottom of page -->
           </div>
         </div>
       </section>
@@ -1323,16 +1320,21 @@ pre code { background: none; padding: 0; border: none; color: var(--text-seconda
     // Initialize Lucide icons
     lucide.createIcons();
 
-    // Clickable buttons - using event delegation on document
-    document.addEventListener('click', function(e) {
-      if (e.target.id === 'btn-youtube' || e.target.closest('#btn-youtube')) {
-        window.open('https://youtube.com/@godago', '_blank');
-      }
-      if (e.target.id === 'btn-skool' || e.target.closest('#btn-skool')) {
-        window.open('https://www.skool.com/ai-productivity-hub', '_blank');
-      }
-    }, true); // Use capture phase
+    // Show CTA buttons only on last slide
+    const cta = document.getElementById('floating-cta');
+    function updateCTA() {
+      const isLastSlide = Reveal.getIndices().h === Reveal.getTotalSlides() - 1;
+      cta.style.display = isLastSlide ? 'flex' : 'none';
+    }
+    Reveal.on('ready', updateCTA);
+    Reveal.on('slidechanged', updateCTA);
   </script>
+
+  <!-- CTA Buttons - Outside Reveal.js for clickability -->
+  <div id="floating-cta" style="position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); display: none; gap: 20px; z-index: 999999;">
+    <a href="https://youtube.com/@godago" target="_blank" class="btn btn--accent">Watch Tutorial</a>
+    <a href="https://www.skool.com/ai-productivity-hub" target="_blank" class="btn">Join Community</a>
+  </div>
 
 </body>
 </html>
