@@ -1280,7 +1280,10 @@ pre code { background: none; padding: 0; border: none; color: var(--text-seconda
                 <a href="https://autonomee.ai" target="_blank" rel="noopener" class="contact-item__value" style="color: var(--accent); text-decoration: none;" data-prevent-swipe>autonomee.ai</a>
               </div>
             </div>
-            <!-- Buttons are rendered as floating elements outside Reveal.js for clickability -->
+            <div style="margin-top: 40px; display: flex; gap: 16px;">
+              <a href="https://youtube.com/@godago" target="_blank" rel="noopener" class="btn btn--accent">Watch Tutorial</a>
+              <a href="https://www.skool.com/ai-productivity-hub" target="_blank" rel="noopener" class="btn">Join Community</a>
+            </div>
           </div>
         </div>
       </section>
@@ -1310,7 +1313,11 @@ pre code { background: none; padding: 0; border: none; color: var(--text-seconda
       maxScale: 2,
       autoAnimate: true,
       autoAnimateDuration: 0.7,
-      plugins: [RevealHighlight]
+      plugins: [RevealHighlight],
+      // Fix for clickable links
+      touch: false,
+      navigationMode: 'linear',
+      disableLayout: false
     });
 
     // Initialize Lucide icons
@@ -1318,24 +1325,5 @@ pre code { background: none; padding: 0; border: none; color: var(--text-seconda
 
   </script>
 
-  <!-- CTA Buttons - OUTSIDE Reveal.js entirely -->
-  <div id="floating-cta" style="position: fixed; bottom: 60px; left: 50%; transform: translateX(-50%); display: none; gap: 16px; z-index: 999999;">
-    <a href="https://youtube.com/@godago" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; border: 2px solid #7b8fa8; background: transparent; color: #7b8fa8; cursor: pointer;">WATCH TUTORIAL</a>
-    <a href="https://www.skool.com/ai-productivity-hub" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; border: 2px solid #f5f4f0; background: transparent; color: #f5f4f0; cursor: pointer;">JOIN COMMUNITY</a>
-  </div>
-
-  <script>
-    // Show CTA only on last slide
-    Reveal.on('ready', () => {
-      const cta = document.getElementById('floating-cta');
-      const checkSlide = () => {
-        const idx = Reveal.getIndices().h;
-        const total = Reveal.getTotalSlides();
-        cta.style.display = (idx === total - 1) ? 'flex' : 'none';
-      };
-      checkSlide();
-      Reveal.on('slidechanged', checkSlide);
-    });
-  </script>
 </body>
 </html>
