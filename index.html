@@ -1309,6 +1309,18 @@ pre code { background: none; padding: 0; border: none; color: var(--text-seconda
 
     // Initialize Lucide icons
     lucide.createIcons();
+
+    // Fix: Make links clickable in Reveal.js
+    document.querySelectorAll('a[href]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('http')) {
+          e.preventDefault();
+          e.stopPropagation();
+          window.open(href, '_blank');
+        }
+      });
+    });
   </script>
 </body>
 </html>
