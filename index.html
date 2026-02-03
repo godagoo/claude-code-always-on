@@ -1316,67 +1316,26 @@ pre code { background: none; padding: 0; border: none; color: var(--text-seconda
     // Initialize Lucide icons
     lucide.createIcons();
 
-    // Create floating buttons for last slide (outside Reveal.js)
-    const floatingBtns = document.createElement('div');
-    floatingBtns.id = 'floating-cta';
-    floatingBtns.innerHTML = `
-      <a href="https://youtube.com/@godago" target="_blank" class="floating-btn accent">Watch Tutorial</a>
-      <a href="https://www.skool.com/ai-productivity-hub" target="_blank" class="floating-btn">Join Community</a>
-    `;
-    floatingBtns.style.cssText = `
-      position: fixed;
-      bottom: 80px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: none;
-      gap: 16px;
-      z-index: 99999;
-    `;
-    document.body.appendChild(floatingBtns);
+  </script>
 
-    // Add styles for floating buttons
-    const style = document.createElement('style');
-    style.textContent = `
-      .floating-btn {
-        display: inline-block;
-        padding: 12px 28px;
-        font-size: 14px;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        text-decoration: none;
-        border: 1px solid #f5f4f0;
-        background: transparent;
-        color: #f5f4f0;
-        cursor: pointer;
-        transition: all 0.3s ease;
-      }
-      .floating-btn:hover {
-        background: #f5f4f0;
-        color: #0a0a0a;
-      }
-      .floating-btn.accent {
-        border-color: #7b8fa8;
-        color: #7b8fa8;
-      }
-      .floating-btn.accent:hover {
-        background: #7b8fa8;
-        color: #0a0a0a;
-      }
-    `;
-    document.head.appendChild(style);
+  <!-- CTA Buttons - OUTSIDE Reveal.js entirely -->
+  <div id="floating-cta" style="position: fixed; bottom: 60px; left: 50%; transform: translateX(-50%); display: none; gap: 16px; z-index: 999999;">
+    <a href="https://youtube.com/@godago" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; border: 2px solid #7b8fa8; background: transparent; color: #7b8fa8; cursor: pointer;">WATCH TUTORIAL</a>
+    <a href="https://www.skool.com/ai-productivity-hub" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; border: 2px solid #f5f4f0; background: transparent; color: #f5f4f0; cursor: pointer;">JOIN COMMUNITY</a>
+  </div>
 
-    // Show floating buttons only on last slide
-    Reveal.on('slidechanged', event => {
-      const isLastSlide = event.indexh === Reveal.getTotalSlides() - 1;
-      floatingBtns.style.display = isLastSlide ? 'flex' : 'none';
+  <script>
+    // Show CTA only on last slide
+    Reveal.on('ready', () => {
+      const cta = document.getElementById('floating-cta');
+      const checkSlide = () => {
+        const idx = Reveal.getIndices().h;
+        const total = Reveal.getTotalSlides();
+        cta.style.display = (idx === total - 1) ? 'flex' : 'none';
+      };
+      checkSlide();
+      Reveal.on('slidechanged', checkSlide);
     });
-
-    // Check on load
-    if (Reveal.getCurrentSlide()) {
-      const isLastSlide = Reveal.getIndices().h === Reveal.getTotalSlides() - 1;
-      floatingBtns.style.display = isLastSlide ? 'flex' : 'none';
-    }
   </script>
 </body>
 </html>
