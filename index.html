@@ -814,7 +814,7 @@ pre code { background: none; padding: 0; border: none; color: var(--text-seconda
           </div>
           <div class="content">
             <p class="kicker">07 // How It Works</p>
-            <h2>PAI Always-On Architecture</h2>
+            <h2>Claude Code Always-On Architecture</h2>
             <div class="workflow" style="margin-top: 48px;">
               <div class="workflow__step fragment">
                 <div class="workflow__box">
@@ -839,7 +839,7 @@ pre code { background: none; padding: 0; border: none; color: var(--text-seconda
               <div class="workflow__arrow">→</div>
               <div class="workflow__step fragment">
                 <div class="workflow__box">
-                  <div class="workflow__label">PAI Skills</div>
+                  <div class="workflow__label">Skills</div>
                   <div class="workflow__sublabel">MCP Tools</div>
                 </div>
               </div>
@@ -869,56 +869,49 @@ pre code { background: none; padding: 0; border: none; color: var(--text-seconda
           </div>
           <div class="content">
             <p class="kicker">08 // Phone Call Flow</p>
-            <h2>Voice Calls That Work</h2>
-            <div class="workflow" style="margin-top: 48px;">
+            <h2>Voice Calls <em>with Context</em></h2>
+            <p class="lead" style="margin-bottom: 24px;">Bidirectional: Say "call me" in Telegram <strong>or</strong> call the agent directly. Either way, the voice agent has full memory.</p>
+            <div class="workflow" style="margin-top: 32px;">
               <div class="workflow__step fragment">
                 <div class="workflow__box">
-                  <div class="workflow__label">"Call me"</div>
-                  <div class="workflow__sublabel">Telegram</div>
+                  <div class="workflow__label">Call Starts</div>
+                  <div class="workflow__sublabel">In or Out</div>
+                </div>
+              </div>
+              <div class="workflow__arrow">→</div>
+              <div class="workflow__step fragment">
+                <div class="workflow__box" style="border-color: var(--success);">
+                  <div class="workflow__label">Context API</div>
+                  <div class="workflow__sublabel">Memory + Chat</div>
                 </div>
               </div>
               <div class="workflow__arrow">→</div>
               <div class="workflow__step fragment">
                 <div class="workflow__box">
                   <div class="workflow__label">ElevenLabs</div>
-                  <div class="workflow__sublabel">Conv. AI</div>
+                  <div class="workflow__sublabel">Voice Agent</div>
                 </div>
               </div>
               <div class="workflow__arrow">→</div>
               <div class="workflow__step fragment">
                 <div class="workflow__box">
-                  <div class="workflow__label">Twilio</div>
-                  <div class="workflow__sublabel">Phone rings</div>
+                  <div class="workflow__label">Conversation</div>
+                  <div class="workflow__sublabel">With Context</div>
                 </div>
               </div>
             </div>
-            <div class="workflow" style="margin-top: 24px;">
-              <div class="workflow__step fragment">
-                <div class="workflow__box">
-                  <div class="workflow__label">Call Ends</div>
-                  <div class="workflow__sublabel">Transcript</div>
-                </div>
+            <div class="grid-3" style="margin-top: 32px;">
+              <div class="card card--success fragment fade-up">
+                <h4 class="card__title">Memory Access</h4>
+                <p class="card__text">Agent knows your goals, facts, and preferences from Supabase.</p>
               </div>
-              <div class="workflow__arrow">→</div>
-              <div class="workflow__step fragment">
-                <div class="workflow__box">
-                  <div class="workflow__label">Claude</div>
-                  <div class="workflow__sublabel">Processes</div>
-                </div>
+              <div class="card card--success fragment fade-up">
+                <h4 class="card__title">Recent Chat</h4>
+                <p class="card__text">Last 15 Telegram messages injected. "What did we discuss?" works.</p>
               </div>
-              <div class="workflow__arrow">→</div>
-              <div class="workflow__step fragment">
-                <div class="workflow__box">
-                  <div class="workflow__label">Actions</div>
-                  <div class="workflow__sublabel">Executed</div>
-                </div>
-              </div>
-              <div class="workflow__arrow">→</div>
-              <div class="workflow__step fragment">
-                <div class="workflow__box">
-                  <div class="workflow__label">Summary</div>
-                  <div class="workflow__sublabel">Telegram</div>
-                </div>
+              <div class="card card--success fragment fade-up">
+                <h4 class="card__title">Post-Call Actions</h4>
+                <p class="card__text">Transcript → Claude → Executes tasks → Summary to Telegram.</p>
               </div>
             </div>
           </div>
@@ -950,8 +943,8 @@ pre code { background: none; padding: 0; border: none; color: var(--text-seconda
               </div>
               <div class="card card--success fragment fade-up">
                 <div class="card__icon card__icon--success"><i data-lucide="phone"></i></div>
-                <h4 class="card__title">Phone Calls</h4>
-                <p class="card__text">ElevenLabs + Twilio. Post-call transcript processing.</p>
+                <h4 class="card__title">Contextual Phone Calls</h4>
+                <p class="card__text">Voice agent has memory + recent chat. Ask "what did we discuss?" and it knows.</p>
               </div>
               <div class="card card--success fragment fade-up">
                 <div class="card__icon card__icon--success"><i data-lucide="bell"></i></div>
@@ -1027,7 +1020,7 @@ pre code { background: none; padding: 0; border: none; color: var(--text-seconda
                 <tr>
                   <th>Vulnerability</th>
                   <th>Clawdbot</th>
-                  <th>PAI Always-On</th>
+                  <th>Claude Code</th>
                 </tr>
               </thead>
               <tbody>
@@ -1073,13 +1066,13 @@ pre code { background: none; padding: 0; border: none; color: var(--text-seconda
           </div>
           <div class="content">
             <p class="kicker">12 // Feature Comparison</p>
-            <h2>Clawdbot vs PAI Always-On</h2>
+            <h2>Clawdbot vs Claude Code</h2>
             <table class="comparison-table" style="margin-top: 32px;">
               <thead>
                 <tr>
                   <th>Feature</th>
                   <th>Clawdbot</th>
-                  <th>PAI</th>
+                  <th>Claude Code</th>
                 </tr>
               </thead>
               <tbody>
