@@ -1257,23 +1257,23 @@ pre code { background: none; padding: 0; border: none; color: var(--text-seconda
           <div class="content flex-center" style="flex-direction: column;">
             <h1>Build Your Own<br><span class="accent-text">Claude Code Always-On</span></h1>
             <p class="lead" style="margin-bottom: 40px;">Full documentation and source code available.</p>
-            <div class="contact-grid" style="width: 100%; max-width: 700px;">
+            <div class="contact-grid" style="width: 100%; max-width: 700px; position: relative; z-index: 9999;">
               <div class="contact-item">
                 <div class="contact-item__label">YouTube</div>
-                <span class="contact-item__value" style="color: var(--accent); cursor: pointer;" onclick="window.open('https://youtube.com/@godago', '_blank')">@godago</span>
+                <span class="contact-item__value" style="color: var(--accent); cursor: pointer;" onclick="event.stopPropagation(); window.open('https://youtube.com/@godago', '_blank'); return false;">@godago</span>
               </div>
               <div class="contact-item">
                 <div class="contact-item__label">Community</div>
-                <span class="contact-item__value" style="color: var(--accent); cursor: pointer;" onclick="window.open('https://www.skool.com/ai-productivity-hub', '_blank')">AI Productivity Hub</span>
+                <span class="contact-item__value" style="color: var(--accent); cursor: pointer;" onclick="event.stopPropagation(); window.open('https://www.skool.com/ai-productivity-hub', '_blank'); return false;">AI Productivity Hub</span>
               </div>
               <div class="contact-item">
                 <div class="contact-item__label">Website</div>
-                <span class="contact-item__value" style="color: var(--accent); cursor: pointer;" onclick="window.open('https://autonomee.ai', '_blank')">autonomee.ai</span>
+                <span class="contact-item__value" style="color: var(--accent); cursor: pointer;" onclick="event.stopPropagation(); window.open('https://autonomee.ai', '_blank'); return false;">autonomee.ai</span>
               </div>
             </div>
-            <div style="margin-top: 40px; display: flex; gap: 16px;">
-              <button class="btn btn--accent" onclick="window.open('https://youtube.com/@godago', '_blank')">Watch Tutorial</button>
-              <button class="btn" onclick="window.open('https://www.skool.com/ai-productivity-hub', '_blank')">Join Community</button>
+            <div style="margin-top: 40px; display: flex; gap: 16px; position: relative; z-index: 9999;">
+              <button class="btn btn--accent" onclick="event.stopPropagation(); window.open('https://youtube.com/@godago', '_blank'); return false;">Watch Tutorial</button>
+              <button class="btn" onclick="event.stopPropagation(); window.open('https://www.skool.com/ai-productivity-hub', '_blank'); return false;">Join Community</button>
             </div>
           </div>
         </div>
